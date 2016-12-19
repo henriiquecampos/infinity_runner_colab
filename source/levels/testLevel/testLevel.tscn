@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=1]
+
+[ext_resource path="res://levels/testLevel/spawner.gd" type="Script" id=1]
+[ext_resource path="res://objects/instantiableTiles/ground.tscn" type="PackedScene" id=2]
+
+[node name="testLevel" type="Node2D"]
+
+[node name="groundSpawner" type="Position2D" parent="."]
+
+transform/pos = Vector2( 1036.6, 556.393 )
+script/script = ExtResource( 1 )
+objectScene = ExtResource( 2 )
+
+[node name="timer" type="Timer" parent="groundSpawner"]
+
+process_mode = 1
+wait_time = 1.0
+one_shot = false
+autostart = false
+
+
