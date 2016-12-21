@@ -1,50 +1,70 @@
 extends KinematicBody2D
 
 #Player's physics
-const GRAVITY = 700
+const GRAVITY = 600
+export var playerJumpForce = 1800
 
-#commented player's horizontal movement until 
+#export var playerVelocity = 100
+#I commented player's horizontal movement until 
 #I define if the best way is to move the player
 #or the instantiated objects
 
-#export var playerVelocity = 100
-export var playerJumpForce = 1800
 #Jump variables needed for limit the jump height
-export var jumpHeight = 100
+export var jumpHeight = 200
 var lastPos
 var currentPos
 var canJump = true
+
+#Player StateMachine
+enum playerStates{RUNNING, JUMPING, SLIDING, HOOKING, COLLIDING}
+onready var playerCurrentState = playerStates.RUNNING
+
 #Collision handling variables
 var collider
+onready var shape = get_node("shape").get_shape()
+onready var originalShapeSize = shape.get_extents()
 func _ready():
+	print(playerStates)
 	set_fixed_process(true)
 
 func _fixed_process(delta):
-	applyCustomForces(delta)
+	for state in playerStates:
+		if playerStates[state] == playerCurrentState:
+			get_node("state").set_text(str(state))
 	checkCollisions()
-	print(is_colliding())
-	jump()
-	
-func jump():
-	if Input.is_action_just_pressed("ui_accept") and canJump:
-		lastPos = get_pos()
-		currentPos = get_pos()
-		canJump = false
-	if Input.is_action_pressed("ui_accept") and lastPos.distance_to(currentPos) < jumpHeight:
-		currentPos = get_pos()
-		move_and_slide(Vector2(0, -playerJumpForce))
-	if Input.is_action_just_released("ui_accept"):
-		pass
-		
+	applyCustomForces(delta)
+	jump(delta)
+	slide()
+
 func applyCustomForces(delta):
 	move(Vector2(0,1) * GRAVITY * delta)
-	
-	#this is preventing any collision check, need to report the bug
-	#move_and_slide(Vector2(playerVelocity, 0))
-	
+
 func checkCollisions():
 	if is_colliding():
 		collider = get_collider()
-		print(collider.get_name())
+		if not playerCurrentState == playerStates.SLIDING:
+			playerCurrentState = playerStates.COLLIDING
 		if collider.is_in_group("platform"):
 			canJump = true
+		if get_collision_normal().y > 0:
+			canJump = false
+
+func jump(delta):
+	if playerCurrentState != playerStates.SLIDING:
+		if Input.is_action_just_pressed("ui_accept") and canJump:
+			lastPos = get_pos()
+			currentPos = get_pos()
+			canJump = false
+		if Input.is_action_pressed("ui_accept") and lastPos.distance_to(currentPos) < jumpHeight and canJump:
+			currentPos = get_pos()
+			move(Vector2(0, -1) * playerJumpForce * delta)
+			playerCurrentState = playerStates.JUMPING
+
+func slide():
+	if playerCurrentState != playerStates.JUMPING:
+		if Input.is_action_just_pressed("ui_down"):
+			shape.set_extents(Vector2(shape.get_extents().x, shape.get_extents().y / 2))
+			playerCurrentState = playerStates.SLIDING
+		elif Input.is_action_just_released("ui_down"):
+			playerCurrentState = playerStates.RUNNING
+			shape.set_extents(originalShapeSize)

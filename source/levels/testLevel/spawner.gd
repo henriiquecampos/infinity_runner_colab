@@ -9,7 +9,6 @@ var lastObject
 onready var timer = get_node("timer")
 func _ready():
 	randomize()
-	timer.set_wait_time(rand_range(0.2,2.0))
 	timer.start()
 
 func _on_timer_timeout():

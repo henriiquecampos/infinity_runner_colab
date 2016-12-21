@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=1]
+
+[sub_resource type="GDScript" id=1]
+
+script/source = "extends Node\n\nvar movingObjectsSpeed = 200"
+
+[node name="globals" type="Node"]
+
+script/script = SubResource( 1 )
+
+

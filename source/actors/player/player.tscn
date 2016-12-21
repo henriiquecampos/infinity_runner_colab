@@ -2,11 +2,10 @@
 
 [ext_resource path="res://actors/player/player.gd" type="Script" id=1]
 
-[sub_resource type="CapsuleShape2D" id=1]
+[sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
-radius = 20.5659
-height = 42.9118
+extents = Vector2( 30.0882, 58.3461 )
 
 [node name="player" type="KinematicBody2D"]
 
@@ -18,7 +17,6 @@ collision/layers = 1
 collision/mask = 1
 collision/margin = 0.08
 script/script = ExtResource( 1 )
-playerVelocity = 100
 playerJumpForce = 1800
 jumpHeight = 100
 
@@ -28,8 +26,22 @@ shape = SubResource( 1 )
 trigger = false
 _update_shape_index = 0
 
-[node name="cameraRig" type="RemoteTransform2D" parent="."]
+[node name="sprite" type="Sprite" parent="."]
 
-remote_path = NodePath("")
+[node name="state" type="Label" parent="."]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = -31.0
+margin/top = -78.0
+margin/right = 32.0
+margin/bottom = -64.0
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
 
 
