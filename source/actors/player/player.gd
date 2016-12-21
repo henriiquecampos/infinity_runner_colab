@@ -16,7 +16,7 @@ var currentPos
 var canJump = true
 
 #Player StateMachine
-enum playerStates{RUNNING, JUMPING, SLIDING, HOOKING, COLLIDING}
+enum playerStates{RUNNING, JUMPING, SLIDING, HOOKING}
 onready var playerCurrentState = playerStates.RUNNING
 
 #Collision handling variables
@@ -42,8 +42,6 @@ func applyCustomForces(delta):
 func checkCollisions():
 	if is_colliding():
 		collider = get_collider()
-		if not playerCurrentState == playerStates.SLIDING:
-			playerCurrentState = playerStates.COLLIDING
 		if collider.is_in_group("platform"):
 			canJump = true
 		if get_collision_normal().y > 0:
@@ -59,12 +57,20 @@ func jump(delta):
 			currentPos = get_pos()
 			move(Vector2(0, -1) * playerJumpForce * delta)
 			playerCurrentState = playerStates.JUMPING
+		else:
+			playerCurrentState = playerStates.RUNNING
 
 func slide():
 	if playerCurrentState != playerStates.JUMPING:
 		if Input.is_action_just_pressed("ui_down"):
 			shape.set_extents(Vector2(shape.get_extents().x, shape.get_extents().y / 2))
 			playerCurrentState = playerStates.SLIDING
+			get_node("timer").start()
 		elif Input.is_action_just_released("ui_down"):
 			playerCurrentState = playerStates.RUNNING
 			shape.set_extents(originalShapeSize)
+			get_node("timer").stop()
+
+func _on_timer_timeout():
+	playerCurrentState = playerStates.RUNNING
+	shape.set_extents(originalShapeSize)
