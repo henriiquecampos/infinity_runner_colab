@@ -2,11 +2,12 @@
 
 [sub_resource type="GDScript" id=1]
 
-script/source = "extends Node\n\nexport (int) var movingObjectsSpeed"
+script/source = "extends Node\n#Node that will store some global settings\n#I made this because we can set a dificulty\n#on the main menu and take it from this node\n#for example to make the obstacles move faster\n\nexport (int) var dificultyMultiplier\nexport (int) var objectsSpeed\nonready var movingObjectsSpeed = objectsSpeed * dificultyMultiplier"
 
 [node name="globals" type="Node"]
 
 script/script = SubResource( 1 )
-movingObjectsSpeed = 400
+dificultyMultiplier = 1
+objectsSpeed = 400
 
 

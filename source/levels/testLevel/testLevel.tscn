@@ -98,6 +98,8 @@ hookRange = 400
 
 editor/display_folded = true
 transform/pos = Vector2( 1024.04, 118.283 )
+minSpawnTime = 0.2
+maxSpawnTime = 2.0
 
 [node name="animator" parent="spawner"]
 

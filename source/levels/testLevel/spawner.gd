@@ -12,6 +12,11 @@ onready var mainNode = get_parent()
 #shown to the player
 
 var lastObject
+
+#variables needed to control the
+#time between instances
+export (float) var minSpawnTime
+export (float) var maxSpawnTime
 onready var timer = get_node("timer")
 
 func _ready():
@@ -39,7 +44,8 @@ func _on_timer_timeout():
 	#randomize a new wait time so that
 	#we have random positions to spawn
 	#the instanciated object
-	timer.set_wait_time(rand_range(0.2,2.0))
+	timer.set_wait_time(rand_range(minSpawnTime,maxSpawnTime)/globals.dificultyMultiplier)
+	get_node("animator").set_speed(globals.dificultyMultiplier)
 	
 func resetSpawn():
 	timer.start()
