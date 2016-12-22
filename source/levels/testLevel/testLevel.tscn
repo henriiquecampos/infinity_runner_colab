@@ -90,6 +90,10 @@ jumpHeight = 200
 
 transform/pos = Vector2( 56.1251, 0 )
 
+[node name="hookRange" parent="player/gunReference"]
+
+hookRange = 400
+
 [node name="spawner" parent="." instance=ExtResource( 2 )]
 
 editor/display_folded = true
@@ -106,7 +110,9 @@ transform/pos = Vector2( 472.952, 455.926 )
 hookShotSpeed = 2000
 hookShotRecoilSpeed = 1000
 gunReferencePath = NodePath("../player/gunReference")
+playerPath = NodePath("../player")
 
 
 [editable path="player"]
 [editable path="spawner"]
+[editable path="hookgun"]

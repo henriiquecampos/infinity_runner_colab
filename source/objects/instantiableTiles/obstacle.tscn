@@ -7,7 +7,7 @@
 custom_solver_bias = 0.0
 extents = Vector2( 24, 24 )
 
-[node name="obstacle" type="KinematicBody2D" groups=[ "obstacle", "platform" ]]
+[node name="obstacle" type="KinematicBody2D" groups=[ "platform", "obstacle" ]]
 
 input/pickable = false
 shapes/0/shape = SubResource( 1 )
@@ -30,6 +30,10 @@ _update_shape_index = 0
 
 transform/pos = Vector2( 65.1387, -24.207 )
 rect = Rect2( 0, 0, 48, 48 )
+
+[node name="grab" type="RemoteTransform2D" parent="."]
+
+remote_path = NodePath("")
 
 [connection signal="exit_screen" from="visibilityNotifier" to="." method="_on_visibilityNotifier_exit_screen"]
 

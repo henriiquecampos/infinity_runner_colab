@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=1]
+[gd_scene load_steps=4 format=1]
 
 [ext_resource path="res://actors/player/player.gd" type="Script" id=1]
 
@@ -7,7 +7,11 @@
 custom_solver_bias = 0.0
 extents = Vector2( 16.0797, 24.0702 )
 
-[node name="player" type="KinematicBody2D"]
+[sub_resource type="GDScript" id=2]
+
+script/source = "extends RayCast2D\n\nexport (int) var hookRange\n\nfunc _ready():\n\tset_fixed_process(true)\nfunc _fixed_process(delta):\n\tset_cast_to(Vector2(0,1).rotated(get_angle_to(get_global_mouse_pos())) * hookRange)"
+
+[node name="player" type="KinematicBody2D" groups=[ "player" ]]
 
 input/pickable = false
 shapes/0/shape = SubResource( 1 )
@@ -51,9 +55,20 @@ wait_time = 0.5
 one_shot = true
 autostart = false
 
-[node name="gunReference" type="Position2D" parent="." groups=[ "player" ]]
+[node name="gunReference" type="RemoteTransform2D" parent="."]
 
 transform/pos = Vector2( 40.6126, 0 )
+remote_path = NodePath("")
+
+[node name="hookRange" type="RayCast2D" parent="gunReference"]
+
+enabled = false
+exclude_parent = true
+cast_to = Vector2( 0, 50 )
+layer_mask = 1
+type_mask = 15
+script/script = SubResource( 2 )
+hookRange = null
 
 [connection signal="timeout" from="timer" to="." method="_on_timer_timeout"]
 

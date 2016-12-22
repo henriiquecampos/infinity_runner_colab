@@ -20,6 +20,7 @@ script/script = ExtResource( 1 )
 hookShotSpeed = 300
 hookShotRecoilSpeed = null
 gunReferencePath = null
+playerPath = null
 
 [node name="shape" type="CollisionShape2D" parent="."]
 
