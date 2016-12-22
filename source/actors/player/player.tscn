@@ -5,7 +5,7 @@
 [sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
-extents = Vector2( 30.0882, 58.3461 )
+extents = Vector2( 16.0797, 24.0702 )
 
 [node name="player" type="KinematicBody2D"]
 
@@ -50,6 +50,10 @@ process_mode = 1
 wait_time = 0.5
 one_shot = true
 autostart = false
+
+[node name="gunReference" type="Position2D" parent="." groups=[ "player" ]]
+
+transform/pos = Vector2( 40.6126, 0 )
 
 [connection signal="timeout" from="timer" to="." method="_on_timer_timeout"]
 

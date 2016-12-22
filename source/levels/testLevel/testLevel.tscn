@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=1]
+[gd_scene load_steps=6 format=1]
 
 [ext_resource path="res://actors/player/player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://levels/testLevel/spawner.tscn" type="PackedScene" id=2]
+[ext_resource path="res://actors/hookgun/hookgun.tscn" type="PackedScene" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -85,13 +86,27 @@ drag_margin/bottom = 0.2
 transform/pos = Vector2( 398.59, 466.736 )
 jumpHeight = 200
 
+[node name="gunReference" parent="player"]
+
+transform/pos = Vector2( 56.1251, 0 )
+
 [node name="spawner" parent="." instance=ExtResource( 2 )]
 
+editor/display_folded = true
 transform/pos = Vector2( 1024.04, 118.283 )
 
 [node name="animator" parent="spawner"]
 
+playback/speed = 4.0
 autoplay = "spawnVerticalMovement"
 
+[node name="hookgun" parent="." instance=ExtResource( 3 )]
 
+transform/pos = Vector2( 472.952, 455.926 )
+hookShotSpeed = 2000
+hookShotRecoilSpeed = 1000
+gunReferencePath = NodePath("../player/gunReference")
+
+
+[editable path="player"]
 [editable path="spawner"]
