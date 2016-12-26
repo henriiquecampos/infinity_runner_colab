@@ -23,7 +23,7 @@ script/source = "extends Label\n\nvar score = 0 \n\nfunc _ready():\n\tset_proces
 
 [node name="testLevel" type="Node2D"]
 
-[node name="ground" type="KinematicBody2D" parent="." groups=[ "platform" ]]
+[node name="ground" type="KinematicBody2D" parent="." groups=[ "platform", "ground" ]]
 
 editor/display_folded = true
 transform/pos = Vector2( 512, 566.942 )
@@ -89,7 +89,6 @@ drag_margin/bottom = 0.2
 
 [node name="player" parent="." instance=ExtResource( 1 )]
 
-editor/display_folded = true
 transform/pos = Vector2( 398.59, 510.587 )
 jumpHeight = 200
 
@@ -99,10 +98,11 @@ transform/pos = Vector2( 56.1251, 0 )
 
 [node name="hookRange" parent="player/gunReference"]
 
-hookRange = 400
+hookRange = 500
 
 [node name="spawner" parent="." instance=ExtResource( 2 )]
 
+editor/display_folded = true
 transform/pos = Vector2( 1024.04, 118.283 )
 minSpawnTime = 0.2
 maxSpawnTime = 2.0

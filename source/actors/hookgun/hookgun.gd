@@ -42,6 +42,8 @@ func shotTheGun(delta):
 				if not isColliding:
 					move(shotAngle * hookShotSpeed * delta)
 				if isColliding:
+					if collider.is_in_group("ground"):
+						canRecoil = true
 					playerNode.playerCurrentState = playerNode.playerStates.HOOKING
 					playerNode.move(Vector2(0,1).rotated(playerNode.get_angle_to(self.get_global_pos())) * hookShotRecoilSpeed * delta)
 					move(Vector2(-globals.movingObjectsSpeed,0) * delta)
