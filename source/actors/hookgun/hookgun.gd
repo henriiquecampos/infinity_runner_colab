@@ -44,6 +44,7 @@ func shotTheGun(delta):
 			#something and then pulls the player
 			#toward the hook position
 			if isColliding:
+				playerNode.playerCurrentState = playerNode.playerStates.HOOKING
 				playerNode.move(Vector2(0,1).rotated(playerNode.get_angle_to(self.get_global_pos())) * hookShotRecoilSpeed * delta)
 				
 			if mousePos != null and get_global_pos().distance_to(mousePos) > 20 and not isColliding:

@@ -17,12 +17,13 @@ extents = Vector2( 513.279, 32 )
 
 [sub_resource type="GDScript" id=3]
 
-script/source = "extends Label\n\nvar score = 0 \n\nfunc _ready():\n\tset_process(true)\n\t\nfunc _process(delta):\n\tscore += int(5 * delta)\n\tset_text(str(score))"
+script/source = "extends Label\n\nvar score = 0 \n\nfunc _ready():\n\tset_process(true)\n\t\nfunc _process(delta):\n\tscore += 5 * delta\n\tset_text(str(score))"
 
 [node name="testLevel" type="Node2D"]
 
 [node name="ground" type="KinematicBody2D" parent="." groups=[ "platform" ]]
 
+editor/display_folded = true
 transform/pos = Vector2( 512, 566.942 )
 input/pickable = false
 shapes/0/shape = SubResource( 1 )
@@ -44,6 +45,7 @@ _update_shape_index = 0
 
 [node name="roof" type="KinematicBody2D" parent="." groups=[ "roof" ]]
 
+editor/display_folded = true
 transform/pos = Vector2( 512, 32.3151 )
 input/pickable = false
 shapes/0/shape = SubResource( 2 )
@@ -99,14 +101,12 @@ hookRange = 400
 
 [node name="spawner" parent="." instance=ExtResource( 2 )]
 
-editor/display_folded = true
-transform/pos = Vector2( 1024.04, 118.283 )
+transform/pos = Vector2( 1024.04, 101.697 )
 minSpawnTime = 0.2
 maxSpawnTime = 2.0
 
 [node name="animator" parent="spawner"]
 
-playback/speed = 4.0
 autoplay = "spawnVerticalMovement"
 
 [node name="hookgun" parent="." instance=ExtResource( 3 )]
