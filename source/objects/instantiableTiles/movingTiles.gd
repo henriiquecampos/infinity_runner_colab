@@ -25,7 +25,7 @@ func _fixed_process(delta):
 		#the player can jump on this obstacles
 		#and can also hit the head on obstacles bottom
 		if get_collision_normal().x != 0 and get_collider() != null and get_collider().is_in_group("player"):
-			print("player died")
+			get_tree().quit()
 
 func _on_area_area_exit( area ):
 	#get_node("grab").set_remote_node("")

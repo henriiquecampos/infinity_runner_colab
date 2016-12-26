@@ -3,18 +3,19 @@ extends KinematicBody2D
 #General Hook speed
 export (int) var hookShotSpeed
 export (int) var hookShotRecoilSpeed
-var mousePos
+var shotAngle
 
-#Variables needed to make the hook
-#goes back when not fired
+#Variables needed to make the hook goes back when not fired
 export (NodePath) var gunReferencePath
 onready var gunReference = get_node(gunReferencePath)
 var canRecoil = true
+var alreadyShoot = false
 
 #Player node References
 export (NodePath) var playerPath
 onready var playerNode = get_node(playerPath)
 
+#Variables needed for collisiong handling
 var isColliding = false
 var collider
 var collisionPos
@@ -26,42 +27,34 @@ func _fixed_process(delta):
 	recoilTheGun(delta)
 	
 func shotTheGun(delta):
-	#Triggers the recoil function
-	#and erase the remote transformer
-	#reference to itself, so it recoils
-	#smoothly
-	if Input.is_action_just_released("shotHookGun"):
+	#Triggers the recoil function and erase the remote transformer reference to itself, so it recoils smoothly
+	if not Input.is_action_pressed("shotHookGun") and alreadyShoot:
 		canRecoil = true
-	if Input.is_action_just_pressed("shotHookGun"):
+	if Input.is_action_just_pressed("shotHookGun") and not alreadyShoot:
 		gunReference.set_remote_node("")
-		mousePos = get_viewport().get_mouse_pos()
-	#Activates the hook, making it go towards
-	#the mouse position, stoping if it is out
-	#of the hookgun's range
-	if Input.is_action_pressed("shotHookGun") and not canRecoil:
-		if get_global_pos().distance_to(gunReference.get_global_pos()) < gunReference.get_child(0).hookRange:
-			#if it is not colliding it moves until it reach
-			#something and then pulls the player
-			#toward the hook position
-			if isColliding:
-				playerNode.playerCurrentState = playerNode.playerStates.HOOKING
-				playerNode.move(Vector2(0,1).rotated(playerNode.get_angle_to(self.get_global_pos())) * hookShotRecoilSpeed * delta)
-				
-			if mousePos != null and get_global_pos().distance_to(mousePos) > 20 and not isColliding:
-				move(Vector2(0,1).rotated(get_angle_to(get_viewport().get_mouse_pos())) * hookShotSpeed * delta)
-			elif not isColliding and get_global_pos().distance_to(mousePos) < 20:
-				canRecoil = true
-		elif get_global_pos().distance_to(gunReference.get_global_pos()) > gunReference.get_child(0).hookRange:
-			canRecoil = true
+		shotAngle = gunReference.get_child(0).get_cast_to().normalized()
+	#Activates the hook, making it go towards the mouse position, stoping if it is out of the hookgun's range
+	if Input.is_action_pressed("shotHookGun"):
+		if not canRecoil:
+			if get_global_pos().distance_to(gunReference.get_global_pos()) < gunReference.get_child(0).hookRange:
+				#if it is not colliding it moves until it reach something and then pulls the player
+				#toward the hook position
+				if not isColliding:
+					move(shotAngle * hookShotSpeed * delta)
+				if isColliding:
+					playerNode.playerCurrentState = playerNode.playerStates.HOOKING
+					playerNode.move(Vector2(0,1).rotated(playerNode.get_angle_to(self.get_global_pos())) * hookShotRecoilSpeed * delta)
+					
+				elif get_global_pos().distance_to(gunReference.get_global_pos()) > gunReference.get_child(0).hookRange:
+					canRecoil = true
+	#Sets the boolean that will enable the behaviour of "Input.is_action_just_pressed"
+	alreadyShoot = Input.is_action_pressed("shotHookGun")
 func recoilTheGun(delta):
-	#Verifies the distance to where the gun
-	#should stay while idle. It also sets the
-	#remote transformer to reference itself
-	#so that it keep following the player 
-	#when it is not being shot
+	#Verifies the distance to where the gun should stay while idle. It also sets the remote 
+	#transformer to reference itself so that it keep following the player when it is not being shot
 	if canRecoil and get_global_pos().distance_to(gunReference.get_global_pos()) > 10:
 		move((gunReference.get_global_pos() - self.get_global_pos()).normalized() * hookShotRecoilSpeed * delta)
-	if get_global_pos().distance_to(gunReference.get_global_pos()) < 10:
+	elif get_global_pos().distance_to(gunReference.get_global_pos()) < 10:
 		gunReference.set_remote_node(get_path())
 		canRecoil = false
 
