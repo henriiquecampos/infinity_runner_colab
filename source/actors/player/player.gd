@@ -41,7 +41,7 @@ func _fixed_process(delta):
 	
 	#call the needed functions to have
 	#basic movements and mechanics
-	checkCollisions()
+	checkCollisions(delta)
 	applyCustomForces(delta)
 	jump(delta)
 	slide()
@@ -53,7 +53,7 @@ func applyCustomForces(delta):
 	#we add new forces in the future
 	move(Vector2(0,1) * GRAVITY * delta)
 
-func checkCollisions():
+func checkCollisions(delta):
 	#verifies collisiong to enable
 	#the jump mechanic and stores
 	#the last collider to future
@@ -61,6 +61,10 @@ func checkCollisions():
 	if is_colliding():
 		collider = get_collider()
 		if collider.is_in_group("platform"):
+			if (get_global_pos() - get_node("../screenPos").get_global_pos()).x > 20:
+				move_local_x(-globals.movingObjectsSpeed * delta)
+			if (get_global_pos() - get_node("../screenPos").get_global_pos()).x < 20:
+				move_local_x(globals.movingObjectsSpeed * delta)
 			canJump = true
 		if get_collision_normal().y > 0:
 			canJump = false

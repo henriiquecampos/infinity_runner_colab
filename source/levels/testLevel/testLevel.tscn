@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=1]
+[gd_scene load_steps=7 format=1]
 
 [ext_resource path="res://actors/player/player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://levels/testLevel/spawner.tscn" type="PackedScene" id=2]
@@ -15,11 +15,14 @@ resource/name = "roofCollider"
 custom_solver_bias = 0.0
 extents = Vector2( 513.279, 32 )
 
+[sub_resource type="GDScript" id=3]
+
+script/source = "extends Label\n\nvar score = 0 \n\nfunc _ready():\n\tset_process(true)\n\t\nfunc _process(delta):\n\tscore += int(5 * delta)\n\tset_text(str(score))"
+
 [node name="testLevel" type="Node2D"]
 
 [node name="ground" type="KinematicBody2D" parent="." groups=[ "platform" ]]
 
-editor/display_folded = true
 transform/pos = Vector2( 512, 566.942 )
 input/pickable = false
 shapes/0/shape = SubResource( 1 )
@@ -31,7 +34,7 @@ collision/margin = 0.08
 
 [node name="sprite" type="Sprite" parent="ground"]
 
-transform/scale = Vector2( 1e-005, 1e-005 )
+transform/scale = Vector2( 15.9582, 1 )
 
 [node name="shape" type="CollisionShape2D" parent="ground"]
 
@@ -41,7 +44,6 @@ _update_shape_index = 0
 
 [node name="roof" type="KinematicBody2D" parent="." groups=[ "roof" ]]
 
-editor/display_folded = true
 transform/pos = Vector2( 512, 32.3151 )
 input/pickable = false
 shapes/0/shape = SubResource( 2 )
@@ -53,7 +55,7 @@ collision/margin = 0.08
 
 [node name="sprite" type="Sprite" parent="roof"]
 
-transform/scale = Vector2( 1e-005, 1e-005 )
+transform/scale = Vector2( 15.911, 1 )
 
 [node name="shape" type="CollisionShape2D" parent="roof"]
 
@@ -83,7 +85,8 @@ drag_margin/bottom = 0.2
 
 [node name="player" parent="." instance=ExtResource( 1 )]
 
-transform/pos = Vector2( 398.59, 466.736 )
+editor/display_folded = true
+transform/pos = Vector2( 398.59, 510.587 )
 jumpHeight = 200
 
 [node name="gunReference" parent="player"]
@@ -108,11 +111,32 @@ autoplay = "spawnVerticalMovement"
 
 [node name="hookgun" parent="." instance=ExtResource( 3 )]
 
+editor/display_folded = true
 transform/pos = Vector2( 472.952, 455.926 )
 hookShotSpeed = 2000
 hookShotRecoilSpeed = 1000
 gunReferencePath = NodePath("../player/gunReference")
 playerPath = NodePath("../player")
+
+[node name="screenPos" type="Position2D" parent="."]
+
+transform/pos = Vector2( 360.108, 509.479 )
+
+[node name="score" type="Label" parent="."]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 203.0
+margin/top = 62.0
+margin/right = 787.0
+margin/bottom = 121.0
+align = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+script/script = SubResource( 3 )
 
 
 [editable path="player"]

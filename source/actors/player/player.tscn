@@ -32,6 +32,9 @@ _update_shape_index = 0
 
 [node name="sprite" type="Sprite" parent="."]
 
+transform/pos = Vector2( 0, 0.0428579 )
+transform/scale = Vector2( 0.462565, 0.789285 )
+
 [node name="state" type="Label" parent="."]
 
 focus/ignore_mouse = true
