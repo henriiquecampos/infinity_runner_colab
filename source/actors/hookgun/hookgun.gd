@@ -30,7 +30,7 @@ func shotTheGun(delta):
 	#Triggers the recoil function and erase the remote transformer reference to itself, so it recoils smoothly
 	if not Input.is_action_pressed("shotHookGun") and alreadyShoot:
 		canRecoil = true
-	if Input.is_action_just_pressed("shotHookGun") and not alreadyShoot:
+	if Input.is_action_pressed("shotHookGun") and not alreadyShoot:
 		gunReference.set_remote_node("")
 		shotAngle = gunReference.get_child(0).get_cast_to().normalized()
 	#Activates the hook, making it go towards the mouse position, stoping if it is out of the hookgun's range
@@ -44,7 +44,7 @@ func shotTheGun(delta):
 				if isColliding:
 					if collider.is_in_group("ground"):
 						canRecoil = true
-					playerNode.playerCurrentState = playerNode.playerStates.HOOKING
+					playerNode.playerCurrentState = "HOOKING"
 					playerNode.move(Vector2(0,1).rotated(playerNode.get_angle_to(self.get_global_pos())) * hookShotRecoilSpeed * delta)
 					move(Vector2(-globals.movingObjectsSpeed,0) * delta)
 					playerNode.move(Vector2(-globals.movingObjectsSpeed,0) * delta)

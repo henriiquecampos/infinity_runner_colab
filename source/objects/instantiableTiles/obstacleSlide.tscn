@@ -6,6 +6,10 @@
 
 [node name="item" parent="."]
 
-transform/pos = Vector2( 0, 48.1257 )
+transform/pos = Vector2( 0, 57.6589 )
+
+[connection signal="exit_screen" from="visibilityNotifier" to="." method="_on_visibilityNotifier_exit_screen"]
+
+[connection signal="body_enter" from="item" to="." method="_on_item_body_enter"]
 
 

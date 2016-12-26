@@ -77,7 +77,6 @@ limit/left = -10000000
 limit/top = -10000000
 limit/right = 10000000
 limit/bottom = 10000000
-limit/smoothed = false
 drag_margin/h_enabled = true
 drag_margin/v_enabled = true
 smoothing/enable = false
@@ -89,8 +88,11 @@ drag_margin/bottom = 0.2
 
 [node name="player" parent="." instance=ExtResource( 1 )]
 
+editor/display_folded = true
 transform/pos = Vector2( 398.59, 510.587 )
+fpsPath = NodePath("../fps")
 jumpHeight = 200
+playerCurrentState = "RUNNING"
 
 [node name="gunReference" parent="player"]
 
@@ -140,9 +142,24 @@ lines_skipped = 0
 max_lines_visible = -1
 script/script = SubResource( 3 )
 
+[node name="fps" type="Label" parent="."]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 0.0
+margin/top = 62.0
+margin/right = 58.0
+margin/bottom = 121.0
+align = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
 [node name="spawnerGround" type="Position2D" parent="."]
 
-transform/pos = Vector2( 1024.04, 469.042 )
+transform/pos = Vector2( 1024.04, 493.822 )
 script/script = ExtResource( 4 )
 objectScene = ExtResource( 5 )
 minSpawnTime = 2.0
@@ -164,6 +181,18 @@ playback/active = true
 playback/speed = 1.0
 blend_times = [  ]
 autoplay = ""
+
+[connection signal="timeout" from="player/timer" to="player" method="_on_timer_timeout"]
+
+[connection signal="timeout" from="spawner/timer" to="spawner" method="_on_timer_timeout"]
+
+[connection signal="area_enter" from="hookgun/area" to="hookgun" method="_on_area_area_enter"]
+
+[connection signal="area_exit" from="hookgun/area" to="hookgun" method="_on_area_area_exit"]
+
+[connection signal="body_enter" from="hookgun/area" to="hookgun" method="_on_area_body_enter"]
+
+[connection signal="body_exit" from="hookgun/area" to="hookgun" method="_on_area_body_exit"]
 
 [connection signal="timeout" from="spawnerGround/timer" to="spawnerGround" method="_on_timer_timeout"]
 
