@@ -30,3 +30,10 @@ func _fixed_process(delta):
 func _on_area_area_exit( area ):
 	#get_node("grab").set_remote_node("")
 	pass
+
+
+func _on_item_body_enter( body ):
+	if body.is_in_group("player"):
+		globals.score += 100
+		print("scored")
+	get_node("item").queue_free()

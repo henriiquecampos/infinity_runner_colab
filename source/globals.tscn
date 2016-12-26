@@ -2,7 +2,7 @@
 
 [sub_resource type="GDScript" id=1]
 
-script/source = "extends Node\n#Node that will store some global settings\n#I made this because we can set a dificulty\n#on the main menu and take it from this node\n#for example to make the obstacles move faster\n\nexport (int) var dificultyMultiplier\nexport (int) var objectsSpeed\nonready var movingObjectsSpeed = objectsSpeed * dificultyMultiplier"
+script/source = "extends Node\n#Node that will store some global settings\n#I made this because we can set a dificulty\n#on the main menu and take it from this node\n#for example to make the obstacles move faster\n\nexport (int) var dificultyMultiplier\nexport (int) var objectsSpeed\nonready var movingObjectsSpeed = objectsSpeed * dificultyMultiplier\n\nvar score = 0"
 
 [node name="globals" type="Node"]
 

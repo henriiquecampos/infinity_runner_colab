@@ -17,7 +17,7 @@ extents = Vector2( 513.279, 32 )
 
 [sub_resource type="GDScript" id=3]
 
-script/source = "extends Label\n\nvar score = 0 \n\nfunc _ready():\n\tset_process(true)\n\t\nfunc _process(delta):\n\tscore += 5 * delta\n\tset_text(str(score))"
+script/source = "extends Label\n\nvar score = 0 \n\nfunc _ready():\n\tset_process(true)\n\t\nfunc _process(delta):\n\tglobals.score += 10 * delta\n\tset_text(str(int(globals.score)))"
 
 [node name="testLevel" type="Node2D"]
 
@@ -101,6 +101,7 @@ hookRange = 400
 
 [node name="spawner" parent="." instance=ExtResource( 2 )]
 
+editor/display_folded = true
 transform/pos = Vector2( 1024.04, 101.697 )
 minSpawnTime = 0.2
 maxSpawnTime = 2.0
