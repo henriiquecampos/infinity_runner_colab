@@ -39,24 +39,6 @@ _update_shape_index = 0
 transform/pos = Vector2( 65.1387, -24.207 )
 rect = Rect2( 0, 0, 48, 48 )
 
-[node name="area" type="Area2D" parent="."]
-
-editor/display_folded = true
-input/pickable = true
-shapes/0/shape = SubResource( 1 )
-shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
-shapes/0/trigger = false
-gravity_vec = Vector2( 0, 1 )
-gravity = 98.0
-linear_damp = 0.1
-angular_damp = 1.0
-
-[node name="shape" type="CollisionShape2D" parent="area"]
-
-shape = SubResource( 1 )
-trigger = false
-_update_shape_index = 0
-
 [node name="item" type="Area2D" parent="."]
 
 transform/pos = Vector2( 0, -73.3057 )
@@ -91,8 +73,6 @@ lines_skipped = 0
 max_lines_visible = -1
 
 [connection signal="exit_screen" from="visibilityNotifier" to="." method="_on_visibilityNotifier_exit_screen"]
-
-[connection signal="area_exit" from="area" to="." method="_on_area_area_exit"]
 
 [connection signal="body_enter" from="item" to="." method="_on_item_body_enter"]
 

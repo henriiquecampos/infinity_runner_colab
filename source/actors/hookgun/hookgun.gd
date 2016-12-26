@@ -44,7 +44,8 @@ func shotTheGun(delta):
 				if isColliding:
 					playerNode.playerCurrentState = playerNode.playerStates.HOOKING
 					playerNode.move(Vector2(0,1).rotated(playerNode.get_angle_to(self.get_global_pos())) * hookShotRecoilSpeed * delta)
-					
+					move(Vector2(-globals.movingObjectsSpeed,0) * delta)
+					playerNode.move(Vector2(-globals.movingObjectsSpeed,0) * delta)
 				elif get_global_pos().distance_to(gunReference.get_global_pos()) > gunReference.get_child(0).hookRange:
 					canRecoil = true
 	#Sets the boolean that will enable the behaviour of "Input.is_action_just_pressed"
