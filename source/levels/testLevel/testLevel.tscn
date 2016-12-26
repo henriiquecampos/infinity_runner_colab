@@ -23,7 +23,7 @@ script/source = "extends Label\n\nvar score = 0 \n\nfunc _ready():\n\tset_proces
 
 [node name="testLevel" type="Node2D"]
 
-[node name="ground" type="KinematicBody2D" parent="." groups=[ "platform", "ground" ]]
+[node name="ground" type="StaticBody2D" parent="." groups=[ "platform", "ground" ]]
 
 editor/display_folded = true
 transform/pos = Vector2( 512, 566.942 )
@@ -33,7 +33,10 @@ shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
 shapes/0/trigger = false
 collision/layers = 1
 collision/mask = 1
-collision/margin = 0.08
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 1.0
+bounce = 0.0
 
 [node name="sprite" type="Sprite" parent="ground"]
 
@@ -45,7 +48,7 @@ shape = SubResource( 1 )
 trigger = false
 _update_shape_index = 0
 
-[node name="roof" type="KinematicBody2D" parent="." groups=[ "roof" ]]
+[node name="roof" type="StaticBody2D" parent="." groups=[ "roof" ]]
 
 editor/display_folded = true
 transform/pos = Vector2( 512, 32.3151 )
@@ -55,7 +58,10 @@ shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
 shapes/0/trigger = false
 collision/layers = 1
 collision/mask = 1
-collision/margin = 0.08
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 1.0
+bounce = 0.0
 
 [node name="sprite" type="Sprite" parent="roof"]
 
@@ -94,8 +100,13 @@ fpsPath = NodePath("../fps")
 jumpHeight = 200
 playerCurrentState = "RUNNING"
 
+[node name="timer" parent="player"]
+
+wait_time = 0.2
+
 [node name="gunReference" parent="player"]
 
+editor/display_folded = true
 transform/pos = Vector2( 56.1251, 0 )
 
 [node name="hookRange" parent="player/gunReference"]
@@ -118,7 +129,7 @@ autoplay = "spawnVerticalMovement"
 editor/display_folded = true
 transform/pos = Vector2( 472.952, 455.926 )
 hookShotSpeed = 2000
-hookShotRecoilSpeed = 1300
+hookShotRecoilSpeed = 1600
 gunReferencePath = NodePath("../player/gunReference")
 playerPath = NodePath("../player")
 
@@ -159,6 +170,7 @@ max_lines_visible = -1
 
 [node name="spawnerGround" type="Position2D" parent="."]
 
+editor/display_folded = true
 transform/pos = Vector2( 1024.04, 493.822 )
 script/script = ExtResource( 4 )
 objectScene = ExtResource( 5 )

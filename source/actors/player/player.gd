@@ -57,6 +57,7 @@ func checkCollisions(delta):
 	if is_colliding():
 		collider = get_collider()
 		if collider.is_in_group("platform"):
+			#makes the character always move towards the fixed screen position where it started
 			if (get_global_pos() - get_node("../screenPos").get_global_pos()).x > 20:
 				move_local_x(-globals.movingObjectsSpeed * delta)
 			if (get_global_pos() - get_node("../screenPos").get_global_pos()).x < 20:
@@ -117,3 +118,6 @@ func _on_timer_timeout():
 	#through the whole game
 	playerCurrentState = "RUNNING"
 	shape.set_extents(originalShapeSize)
+
+func _on_visibilityNotifier_exit_screen():
+	get_tree().quit()

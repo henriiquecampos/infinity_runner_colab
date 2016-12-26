@@ -55,9 +55,9 @@ func shotTheGun(delta):
 func recoilTheGun(delta):
 	#Verifies the distance to where the gun should stay while idle. It also sets the remote 
 	#transformer to reference itself so that it keep following the player when it is not being shot
-	if canRecoil and get_global_pos().distance_to(gunReference.get_global_pos()) > 10:
+	if canRecoil and get_global_pos().distance_to(gunReference.get_global_pos()) > 15:
 		move((gunReference.get_global_pos() - self.get_global_pos()).normalized() * hookShotRecoilSpeed * delta)
-	elif get_global_pos().distance_to(gunReference.get_global_pos()) < 10:
+	elif get_global_pos().distance_to(gunReference.get_global_pos()) < 15:
 		gunReference.set_remote_node(get_path())
 		canRecoil = false
 

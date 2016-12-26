@@ -21,8 +21,10 @@ collision/layers = 1
 collision/mask = 1
 collision/margin = 0.08
 script/script = ExtResource( 1 )
+fpsPath = null
 playerJumpForce = 1800
 jumpHeight = 100
+playerCurrentState = null
 
 [node name="shape" type="CollisionShape2D" parent="."]
 
@@ -66,13 +68,19 @@ remote_path = NodePath("")
 [node name="hookRange" type="RayCast2D" parent="gunReference"]
 
 enabled = false
-exclude_parent = true
 cast_to = Vector2( 0, 50 )
 layer_mask = 1
 type_mask = 15
 script/script = SubResource( 2 )
 hookRange = null
 
+[node name="visibilityNotifier" type="VisibilityNotifier2D" parent="."]
+
+transform/scale = Vector2( 1.56448, 2.38017 )
+rect = Rect2( -10, -10, 20, 20 )
+
 [connection signal="timeout" from="timer" to="." method="_on_timer_timeout"]
+
+[connection signal="exit_screen" from="visibilityNotifier" to="." method="_on_visibilityNotifier_exit_screen"]
 
 
