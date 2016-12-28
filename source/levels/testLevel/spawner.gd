@@ -41,7 +41,8 @@ func _on_timer_timeout():
 	#to the function below, making it
 	#check if it can restart the timer
 	lastObject = newObjectInstance
-	lastObject.get_node("visibilityNotifier").connect("enter_screen", self, "resetSpawn")
+	#lastObject.get_node("visibilityNotifier").connect("enter_viewport", self, "resetSpawn")
+	resetSpawn()
 	#randomize a new wait time so that
 	#we have random positions to spawn
 	#the instanciated object

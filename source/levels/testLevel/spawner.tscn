@@ -26,7 +26,7 @@ maxSpawnTime = null
 [node name="timer" type="Timer" parent="."]
 
 process_mode = 1
-wait_time = 0.06
+wait_time = 1.0
 one_shot = true
 autostart = false
 
