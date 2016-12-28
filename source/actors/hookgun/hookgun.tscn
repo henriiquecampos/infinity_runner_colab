@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=1]
+[gd_scene load_steps=5 format=1]
 
 [ext_resource path="res://actors/hookgun/hookgun.gd" type="Script" id=1]
 [ext_resource path="res://actors/hookgun/hook tip.png" type="Texture" id=2]
@@ -7,6 +7,12 @@
 
 custom_solver_bias = 0.0
 radius = 17.4343
+
+[sub_resource type="OccluderPolygon2D" id=2]
+
+closed = true
+cull_mode = 0
+polygon = Vector2Array( 26.8715, -1.22927, -9.31722, -23.6068, -15.7857, -22.383, -14.2123, -11.7188, -22.0794, -15.2152, -25.9256, -11.5439, -26.6249, 4.53993, -23.1284, 11.7077, -12.8137, 9.43502, -16.8347, 18.3511, -10.541, 23.421 )
 
 [node name="hookgun" type="KinematicBody2D"]
 
@@ -41,6 +47,11 @@ transform/pos = Vector2( 7.16781, 0 )
 shape = SubResource( 1 )
 trigger = true
 _update_shape_index = 0
+
+[node name="occluder" type="LightOccluder2D" parent="."]
+
+occluder = SubResource( 2 )
+light_mask = 1
 
 [connection signal="area_enter" from="area" to="." method="_on_area_area_enter"]
 

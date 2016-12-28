@@ -1,10 +1,5 @@
 extends KinematicBody2D
 
-#debug
-export (NodePath) var fpsPath
-onready var fpsNode = get_node(fpsPath)
-
-
 #Player's physics
 const GRAVITY = 800
 export var playerJumpForce = 1800
@@ -28,7 +23,7 @@ export (String, "RUNNING", "JUMPING", "SLIDING", "HOOKING") var playerCurrentSta
 #Collision handling variables
 var collider
 onready var shape = get_node("shape").get_shape()
-onready var originalShapeSize = shape.get_extents()
+onready var originalShapeSize = shape.get_radius()
 
 #Variables needed to maintain the player on the same screen position when running
 onready var originalPos = get_pos()
@@ -37,9 +32,6 @@ func _ready():
 	set_fixed_process(true)
 
 func _fixed_process(delta):
-	#just to debug the current state of the player, I need to remeber to erase it
-	get_node("state").set_text(playerCurrentState)
-	fpsNode.set_text(str(OS.get_frames_per_second()))
 	
 	#call the needed functions to have basic movements and mechanics
 	checkCollisions(delta)
@@ -98,14 +90,16 @@ func slide(delta):
 			if Input.is_action_pressed("slide") and not alreadySlided:
 				#takes the collision shape and halves it chaning the player state to slide
 				#also starts the sliding duration timer
-				shape.set_extents(Vector2(shape.get_extents().x, shape.get_extents().y / 2))
+				shape.set_radius(shape.get_radius() / 2)
+				get_node("sprite").set_scale(Vector2(1, 0.5))
 				playerCurrentState = "SLIDING"
 				get_node("timer").start()
 			elif not Input.is_action_pressed("slide") and alreadySlided:
 				#toggles the player state to default with the default shape size and
 				#default state, also stops the timer so that it doesn't reset it again
 				playerCurrentState = "RUNNING"
-				shape.set_extents(originalShapeSize)
+				shape.set_radius(originalShapeSize)
+				get_node("sprite").set_scale(Vector2(1, 1))
 				get_node("timer").stop()
 			elif Input.is_action_pressed("slide") and playerCurrentState == "SLIDING":
 				#applies a increased movement speed to give the player the feel that the
@@ -117,7 +111,8 @@ func _on_timer_timeout():
 	#This makes sure the player can't slide
 	#through the whole game
 	playerCurrentState = "RUNNING"
-	shape.set_extents(originalShapeSize)
+	get_node("sprite").set_scale(Vector2(1, 1))
+	shape.set_radius(originalShapeSize)
 
 func _on_visibilityNotifier_exit_screen():
 	get_tree().quit()

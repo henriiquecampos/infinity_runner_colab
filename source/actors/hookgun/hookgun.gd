@@ -33,6 +33,8 @@ func shotTheGun(delta):
 	if Input.is_action_pressed("shotHookGun") and not alreadyShoot:
 		gunReference.set_remote_node("")
 		shotAngle = gunReference.get_child(0).get_cast_to().normalized()
+		set_rot(get_angle_to(shotAngle))
+		get_node("sprite").set_flip_h(true)
 	#Activates the hook, making it go towards the mouse position, stoping if it is out of the hookgun's range
 	if Input.is_action_pressed("shotHookGun"):
 		if not canRecoil:
@@ -60,6 +62,7 @@ func recoilTheGun(delta):
 	elif get_global_pos().distance_to(gunReference.get_global_pos()) < 15:
 		gunReference.set_remote_node(get_path())
 		canRecoil = false
+		get_node("sprite").set_flip_h(false)
 
 func _on_area_body_enter( body ):
 	isColliding = true

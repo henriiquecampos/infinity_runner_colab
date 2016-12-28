@@ -36,4 +36,5 @@ func _on_item_body_enter( body ):
 	if body.is_in_group("player"):
 		globals.score += 100
 		print("scored")
-	get_node("item").queue_free()
+	if body != self:
+		get_node("item").queue_free()

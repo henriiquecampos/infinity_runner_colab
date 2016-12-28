@@ -1,30 +1,90 @@
-[gd_scene load_steps=2 format=1]
+[gd_scene load_steps=7 format=1]
 
-[ext_resource path="res://objects/instantiableTiles/obstacle.tscn" type="PackedScene" id=1]
+[ext_resource path="res://objects/instantiableTiles/movingTiles.gd" type="Script" id=1]
+[ext_resource path="res://objects/instantiableTiles/platform.png" type="Texture" id=2]
+[ext_resource path="res://objects/instantiableTiles/corn.png" type="Texture" id=3]
 
-[node name="obstacle" instance=ExtResource( 1 )]
+[sub_resource type="RectangleShape2D" id=1]
 
-transform/pos = Vector2( 0, -69.3793 )
+custom_solver_bias = 0.0
+extents = Vector2( 114.306, 25.928 )
 
-[node name="sprite" parent="."]
+[sub_resource type="RectangleShape2D" id=2]
 
+custom_solver_bias = 0.0
+extents = Vector2( 9.73929, 18.5918 )
+
+[sub_resource type="OccluderPolygon2D" id=3]
+
+closed = true
+cull_mode = 0
+polygon = Vector2Array( 37.6046, 68.5624, 215.135, 66.8104, 219.807, 59.8026, 220.683, 52.2109, 227.399, 52.2109, 234.699, 55.1308, 244.626, 54.8388, 244.334, 14.544, 237.034, 11.6241, 225.647, 15.42, 221.267, 15.42, 221.851, 6.95227, 217.471, 1.40444, 38.4806, 0.236477, 34.1007, 6.66028, 32.0568, 4.03236, 16.8733, 7.24426, -0.354202, 28.8516, 0.813766, 44.0351, 19.2092, 60.6786, 32.9328, 64.4745 )
+
+[node name="obstacle" type="KinematicBody2D" groups=[ "platform", "obstacle" ]]
+
+transform/pos = Vector2( 0, -51.4668 )
+input/pickable = false
+shapes/0/shape = SubResource( 1 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 126.681, 41.6078 )
+shapes/0/trigger = false
+collision/layers = 1
+collision/mask = 1
+collision/margin = 0.08
+script/script = ExtResource( 1 )
+
+[node name="sprite" type="Sprite" parent="." groups=[ "obstacle" ]]
+
+transform/pos = Vector2( -0.423309, 0.145912 )
+transform/scale = Vector2( 0.756469, 0.7771 )
+texture = ExtResource( 2 )
+centered = false
 flip_v = true
 
-[node name="shape" parent="."]
+[node name="shape" type="CollisionShape2D" parent="."]
 
 transform/pos = Vector2( 126.681, 25.0268 )
+shape = SubResource( 1 )
+trigger = false
+_update_shape_index = 0
 
-[node name="item" parent="."]
+[node name="visibilityNotifier" type="VisibilityNotifier2D" parent="."]
 
-transform/pos = Vector2( 136.062, 58.8094 )
+transform/pos = Vector2( 336.4, 13.0779 )
+rect = Rect2( 0, 0, 48, 48 )
 
-[node name="sprite" parent="item"]
+[node name="item" type="Area2D" parent="."]
+
+transform/pos = Vector2( 131.418, 93.3075 )
+input/pickable = true
+shapes/0/shape = SubResource( 2 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 4.30183 )
+shapes/0/trigger = false
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+
+[node name="sprite" type="Sprite" parent="item"]
 
 transform/pos = Vector2( -0.745378, 18.2648 )
+transform/scale = Vector2( 0.4, 0.4 )
+texture = ExtResource( 3 )
 flip_v = true
 
-[node name="shape" parent="item"]
+[node name="shape" type="CollisionShape2D" parent="item"]
 
 transform/pos = Vector2( 0, 18.5374 )
+shape = SubResource( 2 )
+trigger = false
+_update_shape_index = 0
+
+[node name="occluder" type="LightOccluder2D" parent="."]
+
+occluder = SubResource( 3 )
+light_mask = 1
+
+[connection signal="exit_screen" from="visibilityNotifier" to="." method="_on_visibilityNotifier_exit_screen"]
+
+[connection signal="body_enter" from="item" to="." method="_on_item_body_enter"]
 
 
