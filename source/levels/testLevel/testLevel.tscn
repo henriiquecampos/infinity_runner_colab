@@ -47,15 +47,10 @@ scale = Vector2( 1, 1 )
 
 [node name="player" parent="." instance=ExtResource( 1 )]
 
-editor/display_folded = true
 transform/pos = Vector2( 383.453, 615.165 )
 z/z = 2
 playerJumpForce = 2300
 jumpHeight = 180
-
-[node name="gunReference" parent="player"]
-
-editor/display_folded = false
 
 [node name="hookRange" parent="player/gunReference"]
 
@@ -323,10 +318,6 @@ layer = 1
 offset = Vector2( 0, 0 )
 rotation = 0.0
 scale = Vector2( 1, 1 )
-
-[connection signal="timeout" from="player/timer" to="player" method="_on_timer_timeout"]
-
-[connection signal="exit_screen" from="player/visibilityNotifier" to="player" method="_on_visibilityNotifier_exit_screen"]
 
 [connection signal="timeout" from="spawnerGround/timer" to="spawnerGround" method="_on_timer_timeout"]
 

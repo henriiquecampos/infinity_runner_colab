@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=1]
+[gd_scene load_steps=6 format=1]
 
 [ext_resource path="res://actors/hookgun/hookgun.gd" type="Script" id=1]
 [ext_resource path="res://actors/hookgun/hook tip.png" type="Texture" id=2]
+[ext_resource path="res://actors/hookgun/hook rope.tex" type="Texture" id=3]
 
 [sub_resource type="CircleShape2D" id=1]
 
@@ -52,6 +53,14 @@ _update_shape_index = 0
 
 occluder = SubResource( 2 )
 light_mask = 1
+
+[node name="rope" type="Sprite" parent="."]
+
+visibility/behind_parent = true
+transform/pos = Vector2( -27.3099, 0 )
+texture = ExtResource( 3 )
+centered = false
+region = true
 
 [connection signal="area_enter" from="area" to="." method="_on_area_area_enter"]
 

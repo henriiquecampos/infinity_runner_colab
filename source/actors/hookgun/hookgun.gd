@@ -27,6 +27,9 @@ func _fixed_process(delta):
 	recoilTheGun(delta)
 	
 func shotTheGun(delta):
+	var distanceToReference = get_global_pos().distance_to(gunReference.get_global_pos())
+	get_node("rope").set_region_rect(Rect2(0, 0, distanceToReference, 12))
+	get_node("rope").set_rot( -deg2rad(90) + get_angle_to(Vector2(gunReference.get_global_pos())))
 	#Triggers the recoil function and erase the remote transformer reference to itself, so it recoils smoothly
 	if not Input.is_action_pressed("shotHookGun") and alreadyShoot:
 		canRecoil = true

@@ -1,7 +1,9 @@
-[gd_scene load_steps=6 format=1]
+[gd_scene load_steps=8 format=1]
 
 [ext_resource path="res://actors/player/player.gd" type="Script" id=1]
 [ext_resource path="res://actors/player/pigdev.png" type="Texture" id=2]
+[ext_resource path="res://actors/player/hookRope.gd" type="Script" id=3]
+[ext_resource path="res://actors/hookgun/hook rope.tex" type="Texture" id=4]
 
 [sub_resource type="CircleShape2D" id=1]
 
@@ -52,9 +54,9 @@ _update_shape_index = 0
 
 [node name="gunReference" type="RemoteTransform2D" parent="."]
 
-editor/display_folded = true
 transform/pos = Vector2( 89.0728, 0 )
 remote_path = NodePath("")
+script/script = ExtResource( 3 )
 
 [node name="hookRange" type="RayCast2D" parent="gunReference"]
 
@@ -64,6 +66,13 @@ layer_mask = 1
 type_mask = 15
 script/script = SubResource( 2 )
 hookRange = null
+
+[node name="rope" type="Sprite" parent="gunReference"]
+
+transform/pos = Vector2( -64.3471, 1.38527 )
+texture = ExtResource( 4 )
+centered = false
+region = true
 
 [node name="visibilityNotifier" type="VisibilityNotifier2D" parent="."]
 
