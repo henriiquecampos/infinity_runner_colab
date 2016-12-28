@@ -1,24 +1,14 @@
-[gd_scene load_steps=7 format=1]
+[gd_scene load_steps=6 format=1]
 
 [ext_resource path="res://objects/instantiableTiles/movingTiles.gd" type="Script" id=1]
 [ext_resource path="res://objects/instantiableTiles/platform.png" type="Texture" id=2]
-[ext_resource path="res://objects/instantiableTiles/corn.png" type="Texture" id=3]
+[ext_resource path="res://objects/corn/corn.tscn" type="PackedScene" id=3]
+[ext_resource path="res://objects/instantiableTiles/obstacleOccluder.tres" type="OccluderPolygon2D" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
 extents = Vector2( 114.306, 25.928 )
-
-[sub_resource type="RectangleShape2D" id=2]
-
-custom_solver_bias = 0.0
-extents = Vector2( 13.9113, 25.469 )
-
-[sub_resource type="OccluderPolygon2D" id=3]
-
-closed = true
-cull_mode = 0
-polygon = Vector2Array( -0.880859, 32.0532, 5.57191, 18.4307, 18.8359, 8.39303, 31.0245, 3.73269, 36.0433, 0.14782, 214.57, 0.864799, 220.306, 8.39303, 221.381, 18.7892, 246.475, 19.1476, 245.041, 53.5624, 233.928, 56.0718, 223.174, 51.053, 221.74, 62.5246, 217.796, 66.8264, 39.2697, 68.6189, 34.9679, 61.0906, 31.383, 64.6755, 17.0435, 61.8076, 5.21342, 52.8454, -0.163879, 42.8078 )
 
 [node name="obstacle" type="KinematicBody2D" groups=[ "platform", "obstacle" ]]
 
@@ -50,38 +40,15 @@ _update_shape_index = 0
 transform/pos = Vector2( 336.4, 13.0779 )
 rect = Rect2( 0, 0, 48, 48 )
 
-[node name="item" type="Area2D" parent="."]
-
-transform/pos = Vector2( 134.394, -8.95957 )
-input/pickable = true
-shapes/0/shape = SubResource( 2 )
-shapes/0/transform = Matrix32( 1, 0, 0, 1, 4.40128, -3.18035 )
-shapes/0/trigger = false
-gravity_vec = Vector2( 0, 1 )
-gravity = 98.0
-linear_damp = 0.1
-angular_damp = 1.0
-
-[node name="sprite" type="Sprite" parent="item"]
-
-transform/pos = Vector2( 4.23422, -5.15256 )
-transform/scale = Vector2( 0.538322, 0.538322 )
-texture = ExtResource( 3 )
-
-[node name="shape" type="CollisionShape2D" parent="item"]
-
-transform/pos = Vector2( 4.40128, -3.18035 )
-shape = SubResource( 2 )
-trigger = false
-_update_shape_index = 0
+[node name="corn" parent="." instance=ExtResource( 3 )]
 
 [node name="occluder" type="LightOccluder2D" parent="."]
 
-occluder = SubResource( 3 )
+occluder = ExtResource( 4 )
 light_mask = 1
 
 [connection signal="exit_screen" from="visibilityNotifier" to="." method="_on_visibilityNotifier_exit_screen"]
 
-[connection signal="body_enter" from="item" to="." method="_on_item_body_enter"]
+[connection signal="body_enter" from="corn" to="." method="_on_item_body_enter"]
 
 

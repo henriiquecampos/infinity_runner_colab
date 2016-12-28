@@ -1,20 +1,15 @@
-[gd_scene load_steps=7 format=1]
+[gd_scene load_steps=6 format=1]
 
 [ext_resource path="res://objects/instantiableTiles/movingTiles.gd" type="Script" id=1]
 [ext_resource path="res://objects/instantiableTiles/platform.png" type="Texture" id=2]
-[ext_resource path="res://objects/instantiableTiles/corn.png" type="Texture" id=3]
+[ext_resource path="res://objects/corn/corn.tscn" type="PackedScene" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
 extents = Vector2( 114.306, 25.928 )
 
-[sub_resource type="RectangleShape2D" id=2]
-
-custom_solver_bias = 0.0
-extents = Vector2( 9.73929, 18.5918 )
-
-[sub_resource type="OccluderPolygon2D" id=3]
+[sub_resource type="OccluderPolygon2D" id=2]
 
 closed = true
 cull_mode = 0
@@ -52,39 +47,18 @@ _update_shape_index = 0
 transform/pos = Vector2( 336.4, 13.0779 )
 rect = Rect2( 0, 0, 48, 48 )
 
-[node name="item" type="Area2D" parent="."]
-
-transform/pos = Vector2( 131.418, 93.3075 )
-input/pickable = true
-shapes/0/shape = SubResource( 2 )
-shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 4.30183 )
-shapes/0/trigger = false
-gravity_vec = Vector2( 0, 1 )
-gravity = 98.0
-linear_damp = 0.1
-angular_damp = 1.0
-
-[node name="sprite" type="Sprite" parent="item"]
-
-transform/pos = Vector2( -0.745378, 18.2648 )
-transform/scale = Vector2( 0.4, 0.4 )
-texture = ExtResource( 3 )
-flip_v = true
-
-[node name="shape" type="CollisionShape2D" parent="item"]
-
-transform/pos = Vector2( 0, 18.5374 )
-shape = SubResource( 2 )
-trigger = false
-_update_shape_index = 0
-
 [node name="occluder" type="LightOccluder2D" parent="."]
 
-occluder = SubResource( 3 )
+occluder = SubResource( 2 )
 light_mask = 1
+
+[node name="corn" parent="." instance=ExtResource( 3 )]
+
+transform/pos = Vector2( 120.31, 100.193 )
+transform/scale = Vector2( 1, -1 )
 
 [connection signal="exit_screen" from="visibilityNotifier" to="." method="_on_visibilityNotifier_exit_screen"]
 
-[connection signal="body_enter" from="item" to="." method="_on_item_body_enter"]
+[connection signal="body_enter" from="corn" to="." method="_on_item_body_enter"]
 
 

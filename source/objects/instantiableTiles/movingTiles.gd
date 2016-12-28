@@ -37,4 +37,4 @@ func _on_item_body_enter( body ):
 		globals.score += 100
 		print("scored")
 	if body != self:
-		get_node("item").queue_free()
+		get_node("corn").queue_free()

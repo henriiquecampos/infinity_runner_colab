@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=1]
+[gd_scene load_steps=15 format=1]
 
 [ext_resource path="res://actors/player/player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://actors/hookgun/hookgun.tscn" type="PackedScene" id=2]
@@ -7,9 +7,9 @@
 [ext_resource path="res://levels/testLevel/spawner.tscn" type="PackedScene" id=5]
 [ext_resource path="res://levels/testLevel/spawner.gd" type="Script" id=6]
 [ext_resource path="res://objects/instantiableTiles/obstacleSlide.tscn" type="PackedScene" id=7]
-[ext_resource path="res://levels/testLevel/sky.png" type="Texture" id=8]
-[ext_resource path="res://levels/testLevel/hills.png" type="Texture" id=9]
-[ext_resource path="res://lights/light.png" type="Texture" id=10]
+[ext_resource path="res://lights/light.png" type="Texture" id=8]
+[ext_resource path="res://levels/testLevel/sky.png" type="Texture" id=9]
+[ext_resource path="res://levels/testLevel/hills.png" type="Texture" id=10]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -25,6 +25,10 @@ extents = Vector2( 649.371, 51.002 )
 [sub_resource type="GDScript" id=3]
 
 script/source = "extends Label\n\nvar score = 0 \n\nfunc _ready():\n\tset_process(true)\n\t\nfunc _process(delta):\n\tglobals.score += 10 * delta\n\tset_text(str(int(globals.score)))"
+
+[sub_resource type="GDScript" id=4]
+
+script/source = "extends Camera2D\n\n# class member variables go here, for example:\n# var a = 2\n# var b = \"textvar\"\n\nfunc _ready():\n\tset_process(true)\n\t\nfunc _process(delta):\n\t#set_offset(Vector2(get_offset().x + globals.movingObjectsSpeed * delta, 0))\n\tpass"
 
 [node name="testLevel" type="Node"]
 
@@ -46,7 +50,7 @@ hookRange = 750
 
 [node name="hookgun" parent="." instance=ExtResource( 2 )]
 
-transform/pos = Vector2( 609.419, 428.809 )
+transform/pos = Vector2( 500.589, 605.657 )
 z/z = 2
 hookShotSpeed = 2200
 hookShotRecoilSpeed = 1500
@@ -81,7 +85,6 @@ _update_shape_index = 0
 
 [node name="roof" type="StaticBody2D" parent="." groups=[ "roof" ]]
 
-editor/display_folded = true
 input/pickable = false
 shapes/0/shape = SubResource( 2 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1, 640, 31.7335 )
@@ -95,13 +98,13 @@ bounce = 0.0
 
 [node name="sprite" type="Sprite" parent="roof"]
 
+visibility/visible = false
 texture = ExtResource( 4 )
 centered = false
 
 [node name="shape" type="CollisionShape2D" parent="roof"]
 
 transform/pos = Vector2( 640, 31.7335 )
-transform/scale = Vector2( 1, 1 )
 shape = SubResource( 2 )
 trigger = false
 _update_shape_index = 0
@@ -157,7 +160,109 @@ lines_skipped = 0
 max_lines_visible = -1
 script/script = SubResource( 3 )
 
-[node name="background" type="ParallaxBackground" parent="."]
+[node name="light" type="Light2D" parent="."]
+
+visibility/visible = false
+transform/pos = Vector2( 683.66, 363.558 )
+transform/scale = Vector2( 0.707803, 0.794479 )
+enabled = true
+editor_only = false
+texture = ExtResource( 8 )
+offset = Vector2( 0, 0 )
+scale = 1.0
+color = Color( 0.574219, 0.570469, 0.334213, 1 )
+energy = 1.0
+mode = 0
+range/height = 0.0
+range/z_min = -1024
+range/z_max = 1024
+range/layer_min = 0
+range/layer_max = 0
+range/item_mask = 1
+shadow/enabled = true
+shadow/color = Color( 0, 0, 0, 0 )
+shadow/buffer_size = 2048
+shadow/esm_multiplier = 80.0
+shadow/item_mask = 1
+
+[node name="light1" type="Light2D" parent="."]
+
+visibility/visible = false
+transform/pos = Vector2( 1079.87, 518.426 )
+transform/scale = Vector2( 0.59314, 0.369856 )
+enabled = true
+editor_only = false
+texture = ExtResource( 8 )
+offset = Vector2( 0, 0 )
+scale = 1.0
+color = Color( 0.574219, 0.570469, 0.334213, 1 )
+energy = 3.0
+mode = 0
+range/height = 0.0
+range/z_min = -1024
+range/z_max = 1024
+range/layer_min = 0
+range/layer_max = 0
+range/item_mask = 1
+shadow/enabled = true
+shadow/color = Color( 0, 0, 0, 0 )
+shadow/buffer_size = 2048
+shadow/esm_multiplier = 80.0
+shadow/item_mask = 1
+
+[node name="light2" type="Light2D" parent="."]
+
+visibility/visible = false
+transform/pos = Vector2( 189.221, 518.426 )
+transform/scale = Vector2( 0.59314, 0.369856 )
+enabled = true
+editor_only = false
+texture = ExtResource( 8 )
+offset = Vector2( 0, 0 )
+scale = 1.0
+color = Color( 0.574219, 0.570469, 0.334213, 1 )
+energy = 3.0
+mode = 0
+range/height = 0.0
+range/z_min = -1024
+range/z_max = 1024
+range/layer_min = 0
+range/layer_max = 0
+range/item_mask = 1
+shadow/enabled = true
+shadow/color = Color( 0, 0, 0, 0 )
+shadow/buffer_size = 2048
+shadow/esm_multiplier = 80.0
+shadow/item_mask = 1
+
+[node name="parallax" type="CanvasLayer" parent="."]
+
+layer = 1
+offset = Vector2( 0, 0 )
+rotation = 0.0
+scale = Vector2( 1, 1 )
+
+[node name="parallaxCamera" type="Camera2D" parent="parallax"]
+
+anchor_mode = 0
+rotating = false
+current = true
+zoom = Vector2( 1, 1 )
+limit/left = -10000000
+limit/top = -10000000
+limit/right = 10000000
+limit/bottom = 10000000
+drag_margin/h_enabled = true
+drag_margin/v_enabled = true
+smoothing/enable = false
+smoothing/speed = 5.0
+drag_margin/left = 0.2
+drag_margin/top = 0.2
+drag_margin/right = 0.2
+drag_margin/bottom = 0.2
+script/script = SubResource( 4 )
+
+[node name="background" type="ParallaxBackground" parent="parallax"]
 
 editor/display_folded = true
 layer = -1
@@ -171,54 +276,47 @@ scroll/limit_begin = Vector2( 0, 0 )
 scroll/limit_end = Vector2( 0, 0 )
 scroll/ignore_camera_zoom = false
 
-[node name="sky" type="ParallaxLayer" parent="background"]
+[node name="sky" type="ParallaxLayer" parent="parallax/background"]
 
 editor/display_folded = true
 motion/scale = Vector2( 1.3, 1 )
 motion/offset = Vector2( 0, 0 )
 motion/mirroring = Vector2( 1280, 0 )
 
-[node name="sprite" type="Sprite" parent="background/sky"]
+[node name="sprite" type="Sprite" parent="parallax/background/sky"]
 
-texture = ExtResource( 8 )
+texture = ExtResource( 9 )
 centered = false
 
-[node name="hills" type="ParallaxLayer" parent="background"]
+[node name="hills" type="ParallaxLayer" parent="parallax/background"]
 
 editor/display_folded = true
 motion/scale = Vector2( 1, 1 )
 motion/offset = Vector2( 0, 0 )
 motion/mirroring = Vector2( 1280, 0 )
 
-[node name="Sprite" type="Sprite" parent="background/hills"]
+[node name="Sprite" type="Sprite" parent="parallax/background/hills"]
 
 transform/pos = Vector2( 0, 257.825 )
-texture = ExtResource( 9 )
+texture = ExtResource( 10 )
 centered = false
 
-[node name="light" type="Light2D" parent="."]
+[node name="ground" type="ParallaxLayer" parent="parallax/background"]
 
-transform/pos = Vector2( 651.893, 363.558 )
-transform/scale = Vector2( 1.27411, 0.794479 )
-enabled = true
-editor_only = false
-texture = ExtResource( 10 )
-offset = Vector2( 0, 0 )
-scale = 1.0
-color = Color( 1, 0.996277, 0.761719, 1 )
-energy = 0.95
-mode = 0
-range/height = 0.0
-range/z_min = -1024
-range/z_max = 1024
-range/layer_min = 0
-range/layer_max = 0
-range/item_mask = 1
-shadow/enabled = true
-shadow/color = Color( 0, 0, 0, 0 )
-shadow/buffer_size = 2048
-shadow/esm_multiplier = 80.0
-shadow/item_mask = 1
+editor/display_folded = true
+motion/scale = Vector2( 1, 1 )
+motion/offset = Vector2( 0, 0 )
+motion/mirroring = Vector2( 1280, 0 )
+
+[node name="sprite" type="Sprite" parent="parallax/background/ground"]
+
+transform/pos = Vector2( 0, 5.60822 )
+texture = ExtResource( 4 )
+centered = false
+
+[connection signal="timeout" from="player/timer" to="player" method="_on_timer_timeout"]
+
+[connection signal="exit_screen" from="player/visibilityNotifier" to="player" method="_on_visibilityNotifier_exit_screen"]
 
 [connection signal="timeout" from="spawnerGround/timer" to="spawnerGround" method="_on_timer_timeout"]
 
