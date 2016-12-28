@@ -28,6 +28,7 @@ func _ready():
 	timer.start()
 
 func _on_timer_timeout():
+	print(get_name())
 	#creates a new instance of the reference
 	#object and add it to the scene
 	#setting the postion to be the position

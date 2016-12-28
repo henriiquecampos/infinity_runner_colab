@@ -4,12 +4,27 @@
 
 [node name="obstacle" instance=ExtResource( 1 )]
 
+transform/pos = Vector2( 0, -69.3793 )
+
+[node name="sprite" parent="."]
+
+flip_v = true
+
+[node name="shape" parent="."]
+
+transform/pos = Vector2( 126.681, 25.0268 )
+
 [node name="item" parent="."]
 
-transform/pos = Vector2( 0, 57.6589 )
+transform/pos = Vector2( 136.062, 58.8094 )
 
-[connection signal="exit_screen" from="visibilityNotifier" to="." method="_on_visibilityNotifier_exit_screen"]
+[node name="sprite" parent="item"]
 
-[connection signal="body_enter" from="item" to="." method="_on_item_body_enter"]
+transform/pos = Vector2( -0.745378, 18.2648 )
+flip_v = true
+
+[node name="shape" parent="item"]
+
+transform/pos = Vector2( 0, 18.5374 )
 
 

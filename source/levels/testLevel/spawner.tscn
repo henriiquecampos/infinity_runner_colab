@@ -13,12 +13,15 @@ tracks/0/type = "value"
 tracks/0/path = NodePath(".:transform/pos")
 tracks/0/interp = 1
 tracks/0/imported = false
-tracks/0/keys = { "times":FloatArray( 0, 3 ), "transitions":FloatArray( 1, 1 ), "update":0, "values":[ Vector2( 1024.04, 118.283 ), Vector2( 1024.04, 472.853 ) ] }
+tracks/0/keys = { "times":FloatArray( 0, 3 ), "transitions":FloatArray( 1, 1 ), "update":0, "values":[ Vector2( 1280, 120 ), Vector2( 1280, 445.585 ) ] }
 
 [node name="spawner" type="Position2D"]
 
+transform/pos = Vector2( 1280, 445.585 )
 script/script = ExtResource( 1 )
 objectScene = ExtResource( 2 )
+minSpawnTime = null
+maxSpawnTime = null
 
 [node name="timer" type="Timer" parent="."]
 
@@ -36,7 +39,7 @@ anims/spawnVerticalMovement = SubResource( 1 )
 playback/active = true
 playback/speed = 1.0
 blend_times = [  ]
-autoplay = ""
+autoplay = "spawnVerticalMovement"
 
 [connection signal="timeout" from="timer" to="." method="_on_timer_timeout"]
 
